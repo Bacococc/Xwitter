@@ -5,9 +5,10 @@ import Profile from "./routes/profile"
 import Home from "./routes/home"
 import CreateAccount from "./routes/create-account";
 import Login from "./routes/login"
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/loading-screen";
+import { auth } from "./firebase";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +47,17 @@ const GlobalStyles = createGlobalStyle`
     sans-serif;
   }
 `;
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`;
 
 function App() {
 
   const [isLoading, setIsLoading] = useState(true);
   const init = async() => {
-    
+    await auth.authStateReady(); //최종 인증 상태가 완료되면 실행되는 promise를 return. -> firebase가 쿠키와 토큰을 읽고 백앤드랑 소통해서 로그인 여부를 확인하는 동안 기다림
     setIsLoading(false);
   };
   useEffect(() => { 
@@ -59,10 +65,10 @@ function App() {
   },[])
 
   return (
-    <>
+    <Wrapper>
       <GlobalStyles />
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-    </>
+    </Wrapper>
   )
 }
 

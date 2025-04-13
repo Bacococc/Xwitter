@@ -17,7 +17,7 @@ export const Form = styled.form`
     width: 100%;`;
 
 export const Input = styled.input`
-    margin: 5px 0px 10px 5px;
+    margin: 15px 0px 0px 0px;
     padding: 20px 20px;
     border-radius: 50px;
     border: none;
@@ -46,4 +46,5 @@ export const Switcher = styled.span`
 `;
 
 export const Title = styled.h1`
+    margin: 20px 0 20px 0;
     font-size: 45px`;

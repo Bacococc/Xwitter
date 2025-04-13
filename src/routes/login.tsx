@@ -8,7 +8,7 @@ import GithubButton from "../components/github-button";
 
 
 
-export default function CreateAccount(){
+export default function Login(){
     const[isLoading, setLoading] = useState(false);
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
@@ -23,11 +23,11 @@ export default function CreateAccount(){
             setPassword(value)
         } 
     }
-    //firebase 회원가입 처리
+    //firebase 로그인
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
-        if (isLoading || email === "" || password === "")return; //로딩 중이거나 3 항목 중 하나라도 비었을 때, 프로세스 종료
+        if (isLoading || email === "" || password === "")return; //로딩 중이거나 2 항목 중 하나라도 비었을 때, 프로세스 종료
         try {
             setLoading(true);
             await signInWithEmailAndPassword(auth, email, password);
@@ -56,7 +56,10 @@ export default function CreateAccount(){
             </Form>
             {error !== "" ? <Error>{error}</Error> : null}
             <Switcher>
-                Don't have an account? <Link to={"/create-account"}>Create one →</Link>
+                Don't have an Account? <Link to={"/create-account"}>Create one →</Link>
+            </Switcher>
+            <Switcher>
+                Forgot your Password? <Link to={"/reset-password"}>Reset password →</Link>
             </Switcher>
             <GithubButton />
         </Wrapper>

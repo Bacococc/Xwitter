@@ -40,6 +40,13 @@ export const Error = styled.span`
     color: tomato;
 `;
 
+export const Success = styled.span`
+    margin: 18px 0px 18px 0px;
+    font-size: 15px;
+    font-weight: 600;
+    color:rgb(116, 189, 123);
+`;
+
 export const Switcher = styled.span`
     margin-top: 20px;
     a {

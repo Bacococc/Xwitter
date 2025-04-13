@@ -24,9 +24,11 @@ export const Input = styled.input`
     width: 100%;
     font-size: 16px;
     &[type="submit"]{
-        cursor:pointer;
+        color: white;
+        background-color: #1d9bf0;
+        cursor: pointer;
         &:hover{
-        opacity: 0.8;
+        background-color:rgb(28, 134, 205);
         }
     }
 `;
@@ -48,3 +50,4 @@ export const Switcher = styled.span`
 export const Title = styled.h1`
     margin: 20px 0 20px 0;
     font-size: 45px`;
+    

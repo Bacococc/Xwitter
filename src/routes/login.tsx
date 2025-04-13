@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -6,6 +6,23 @@ import { FirebaseError } from "firebase/app";
 import { Input, Switcher, Title, Wrapper, Error } from "../components/auth-components";
 import GithubButton from "../components/github-button";
 
+
+interface ResetPasswordProps {
+    email: string;
+  };
+  
+function ResetPassword({ email }: ResetPasswordProps){
+    const onClick = async () => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+        } catch (error) {
+            console.error(error);
+        };
+    };
+    return (
+        <Switcher onClick={onClick}>I forgot my password!</Switcher>
+    )
+};
 
 export default function CreateAccount(){
     const[isLoading, setLoading] = useState(false);
@@ -57,6 +74,7 @@ export default function CreateAccount(){
             <Switcher>
                 Don't have an account? <Link to={"/create-account"}>Create one →</Link>
             </Switcher>
+            <ResetPassword />
             <GithubButton />
         </Wrapper>
 )};

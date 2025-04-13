@@ -1,11 +1,11 @@
-import { GithubAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import styled from "styled-components"
 import { auth } from "../firebase";
 import { Navigate, useNavigate } from "react-router-dom";
 
  const Button = styled.span`
     color: black;
-    background-color: whitesmoke;
+    background-color: #ffffff;
     font-weight: 500;
     margin: 40px 0 0 18px;
     width: 100%;
@@ -15,7 +15,10 @@ import { Navigate, useNavigate } from "react-router-dom";
     display: flex;
     align-items: center;    
     justify-content: center;
-    cursor: pointer;
+    &:hover{
+        cursor: pointer;
+        background-color: #e6e6e6;
+    }
  `;
 
  const Logo = styled.img`

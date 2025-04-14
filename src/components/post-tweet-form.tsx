@@ -1,5 +1,7 @@
+import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
 import styled from "styled-components"
+import { auth, db } from "../firebase";
 
 const Form = styled.form`
     display: flex;
@@ -54,7 +56,7 @@ const SubmitBtn = styled.input`
     `;
 
 export default function PostTweetForm() {
-    const[isloading, setLoading] = useState(false);
+    const[isLoading, setLoading] = useState(false);
     const[tweet, setTweet] = useState("");
     const[file, setFile] = useState<file|null>(null);
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -66,11 +68,30 @@ export default function PostTweetForm() {
             setFile(files[0])
         }
     };
-    return <Form>
+    const onSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if(!user || isLoading || tweet === "" || tweet.length > 180) return;
+        try{
+            setLoading(true);
+            await addDoc(collection(db, "tweets"), {
+                tweet,
+                createdAt: Date.now(),
+                username: user.displayName || "Anonymous",
+                userId: user.uid, 
+            });
+        } catch(e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return <Form onSubmit={onSubmit}>
         <TextArea rows={5} maxLength={180} onChange={onChange} value={tweet} placeholder="What is happening?"/>
         <AttachFileButton htmlFor="file">{file ? "✓" : "Add photo"}</AttachFileButton> 
         {/* 같은 file 아이디를 가지고 있어서 레이블을 클릭해도 작동 */}
         <AttachFileInput onChange={onFileChange} type="file" id="file" accept="image/*"/>
-        <SubmitBtn type="submit" value={isloading ? "Posting..." : "Post Tweet"}/>
+        <SubmitBtn type="submit" value={isLoading ? "Posting..." : "Post Tweet"}/>
     </Form>
 }
